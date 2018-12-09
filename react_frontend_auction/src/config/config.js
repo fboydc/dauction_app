@@ -1,0 +1,4 @@
+export default {
+    "DEED_REPOSITORY":"0x9ef348378037ff6b0ce4814c447cd602da2f7a89",
+    "AUCTION_REPOSITORY":"0xc41c57870acca76f992795f41afc26976dd0c8b9"
+}
