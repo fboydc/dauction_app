@@ -5,7 +5,6 @@ import web3 from './config/web3';
 import Footer from './Footer';
 import Header from './Header';
 import Main from './Main';
-import gavel from './img/gavel.svg';
 
 const App= ()=> {
 
@@ -15,10 +14,9 @@ const App= ()=> {
   let [network, setNetwork] = useState(''); 
 
   useEffect(()=>{
-    const provider = web3.eth.givenProvider;
-    setWallet(provider.selectedAddress);
-    setNetwork(provider.networkVersion);
-  }, [wallet]);
+    setWallet(web3.eth.givenProvider.selectedAddress);  
+    setNetwork(web3.eth.givenProvider.networkVersion);
+  }, [wallet, network]);
 
     return (
       <div className="application-wrap">
