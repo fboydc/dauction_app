@@ -1,5 +1,6 @@
 import React from 'react';
 import gavel from './img/gavel.svg';
+import DeedRepository from './config/DeedRepository';
 
 const Main = ()=>{
     return (

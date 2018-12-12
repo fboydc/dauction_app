@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import AuctionModal from './AuctionModal';
 
-const Header = ()=>{
+const Header = (props)=>{
 
     const [modalClass, setModalClass] = useState("");
     const [open, isOpen] = useState(false);
@@ -11,6 +11,7 @@ const Header = ()=>{
 
     useEffect(()=>{
         toggleModal();
+
     }, [isOpen]);
 
     const toggleModal = ()=>{
@@ -30,13 +31,12 @@ const Header = ()=>{
       }
 
     const generateId =  ()=> {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-              .toString(16)
-              .substring(1);
-          }
-          return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-      };
+       
+          return Math.floor(100000000 + Math.random() * 900000000);
+    };
+
+    
+
 
 
     return (
@@ -45,7 +45,7 @@ const Header = ()=>{
             <button className="new-auction-button" onClick={toggleModal}>
                 <span>New Auction</span>
             </button>
-            <AuctionModal modalClass={modalClass} toggleModal={toggleModal} deedId={deedId} deedUrl={deedUrl} setDeedUrl={setDeedUrl} handleDeedDeedUrlInput={handleDeedDeedUrlInput}/>
+            <AuctionModal modalClass={modalClass} toggleModal={toggleModal} deedId={deedId} deedUrl={deedUrl} setDeedUrl={setDeedUrl} handleDeedDeedUrlInput={handleDeedDeedUrlInput} wallet={props.wallet} newDeed={props.newDeed}/>
         </header>
     )
 }

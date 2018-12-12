@@ -1,11 +1,36 @@
 import React, {useState, useEffect} from 'react';
+import DeedRepository from './config/DeedRepository';
 
 
 
 const AuctionModal = (props)=>{
 
-       
-      
+
+
+    const createDeed = ()=>{
+        if(validateInput(props.deedUrl)){
+            DeedRepository.methods.registerDeed(props.deedId, props.deedUrl).send({from: props.wallet}, (error, transactionHash)=>{
+                if(error)
+                    console.log("error", error);
+                else
+                    console.log(transactionHash);
+
+            });
+        }        
+        else{
+           
+        }
+            
+    }
+
+    const validateInput = (input)=>{
+        if(input){
+            return true;
+        }else{
+            return false;
+        }
+    }
+  
       
     
 
@@ -24,9 +49,12 @@ const AuctionModal = (props)=>{
                  <input className="input_form_input" value={props.deedUrl} onChange={props.handleDeedDeedUrlInput}/>
             </div>
             <div className="input_form"> 
-                <button className="input_form_button">create</button>
+                <button className="input_form_button" onClick={createDeed}>create</button>
             </div>
-            <hr/>  
+            <hr/>
+            {
+             props.newDeed?<p>Deed ID: <span>{props.newDeed.id}</span>Owner Wallet:<span>{props.newDeed.by}</span></p>:<span>Create Deed first!</span>   
+            }  
             <div className="modal_top_row">
                 <h3>Now, let's create an auction for this deed:</h3>
             </div>
