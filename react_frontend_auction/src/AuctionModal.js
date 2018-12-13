@@ -5,6 +5,12 @@ import DeedRepository from './config/DeedRepository';
 
 const AuctionModal = (props)=>{
 
+    useEffect(()=>{
+        console.log("i've been rendered");
+        return ()=>{
+            console.log("i've been dismissed");
+        }
+    })
 
 
     const createDeed = ()=>{
@@ -52,15 +58,21 @@ const AuctionModal = (props)=>{
                 <button className="input_form_button" onClick={createDeed}>create</button>
             </div>
             <hr/>
+            <div className="input_form">
             {
              props.newDeed?<p>Deed ID: <span>{props.newDeed.id}</span>Owner Wallet:<span>{props.newDeed.by}</span></p>:<span>Create Deed first!</span>   
-            }  
+            }
+            </div>  
             <div className="modal_top_row">
                 <h3>Now, let's create an auction for this deed:</h3>
             </div>
             <div className="input_form">
-                 <span className="input_form_label">Deed Identifier</span>
-                 <input className="input_form_input" value="" disabled/>
+                 <span className="input_form_label">Deed ID:</span>
+                 <input className="input_form_input" value={props.newDeed.id} disabled/>
+            </div>
+            <div className="input_form">
+                 <span className="input_form_label">Auction Title:</span>
+                 <input className="input_form_input" value={props.newDeed.id} />
             </div>
         </div>
     )

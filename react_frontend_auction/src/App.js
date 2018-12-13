@@ -20,13 +20,17 @@ const App= ()=> {
     console.log("useEffect");
     setWallet(web3.eth.givenProvider.selectedAddress);  
     setNetwork(web3.eth.givenProvider.networkVersion);
+    
+  }, [wallet, network]);
+
+  useEffect(()=>{
     DeedRepository.events.DeedRegistered((error, event)=>{
       if(error)
         return;
-      console.log(event);
+      //console.log(event);
       setNewdeed({by: event.returnValues._by, id: event.returnValues._tokenId})
     });
-  }, [wallet, network]);
+  }, [newDeed])
 
    
 
