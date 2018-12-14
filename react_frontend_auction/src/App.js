@@ -5,6 +5,11 @@ import Footer from './Footer';
 import Header from './Header';
 import Main from './Main';
 import DeedRepository from './config/DeedRepository';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faTimes)
 
 const App= ()=> {
 
@@ -17,11 +22,13 @@ const App= ()=> {
 
 
   useEffect(()=>{
-    console.log("useEffect");
-    setWallet(web3.eth.givenProvider.selectedAddress);  
-    setNetwork(web3.eth.givenProvider.networkVersion);
+    setWallet(web3.eth.givenProvider.selectedAddress);    
     
   }, [wallet, network]);
+
+  useEffect(()=>{
+    setNetwork(web3.eth.givenProvider.networkVersion);
+  })
 
   useEffect(()=>{
     DeedRepository.events.DeedRegistered((error, event)=>{

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import DeedRepository from './config/DeedRepository';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 
@@ -47,7 +48,7 @@ const AuctionModal = (props)=>{
             });
         }        
         else{
-           
+           console.log("no value provided for the Deed URL");
         }
             
     }
@@ -75,62 +76,95 @@ const AuctionModal = (props)=>{
 
     return(
         <div className={props.modalClass}>
-            <div className="modal_top_row">
-                <h3>Let's create your deed first:</h3>
-                <button className="close-button" onClick={resetModal}>X</button>
+            <div className="modal_header">
+                <h2>New Auction</h2>
+                <button className="close-button" onClick={resetModal}><FontAwesomeIcon icon="times" /></button>
             </div>
-            <div className="input_form">
-                 <span className="input_form_label">Deed Identifier</span>
-                 <input className="input_form_input" value={props.deedId} disabled/>
+            <div className="modal_body">
+                <div className="modal_step">
+                    {
+                        newDeed.id?
+                        <div className="modal_step_header">
+                            <span className="step_enumeration">1</span>
+                            <p>
+                                Create a non-fungible token (ERC 721 Compliant)
+                                <p className="step_desc">
+                                    Create a Deed/Token
+                                </p>
+                            </p>
+                        </div>:
+                        <div className="modal_step_header">
+                             <span className="step_enumeration">1</span>
+                             <p>
+                                Create a non-fungible token (ERC 721 Compliant)
+                                <p className="step_desc">
+                                    Create a Deed/Token
+                                </p>
+                            </p>
+                        </div>
+                    }
+                </div>
             </div>
-            <div className="input_form">
-                 <span className="input_form_label">Deed Url</span>
-                 <input className="input_form_input" value={deedUrl} onChange={handleDeedUrlInput}/>
-            </div>
-            <div className="input_form"> 
-                <button className="input_form_button" onClick={createDeed}>create</button>
-            </div>
-            <hr/>
-            <div className="input_form">
             {
-             newDeed.id?<p>Deed ID: <span>{newDeed.id}</span>Owner Wallet:<span>{newDeed.by}</span></p>:<span>Create Deed first!</span>   
+                /*
+                newDeed.id?
+                <div className="input_form_group">
+                   <h3>Deed Info</h3>
+                    <div className="input_form">
+                        <span className="input_form_label">Deed Identifier</span>
+                        <input className="input_form_input" value={newDeed.id} disabled/>
+                    </div>
+                    <div className="input_form">
+                        <span className="input_form_label">Deed Url</span>
+                        <input className="input_form_input" value={newDeed.url} disabled />
+                    </div>
+                    <div className="input_form"> 
+                        <button className="input_form_button" onClick={createDeed} disabled>create</button>
+                    </div>
+                </div>:
+                <div className="input_form_group enabled">
+                    <h3>Create your deed:</h3>
+                    <div className="input_form">
+                        <span className="input_form_label">Deed Identifier</span>
+                        <input className="input_form_input" value={props.deedId} disabled/>
+                    </div>
+                    <div className="input_form">
+                        <span className="input_form_label">Deed Url</span>
+                        <input className="input_form_input" value={deedUrl} onChange={handleDeedUrlInput}/>
+                    </div>
+                    <div className="input_form"> 
+                        <button className="input_form_button" onClick={createDeed}>create</button>
+                    </div>
+                </div>
+                */
             }
-            </div>  
-            <div className="modal_top_row">
-                <h3>Now, let's create an auction for this deed:</h3>
-            </div>
-            <div className="input_form">
-                 <span className="input_form_label">Deed ID:</span>
-                 <input className="input_form_input" value={newDeed.id} disabled/>
-            </div>
-            <div className="input_form">
-                 <span className="input_form_label">Auction Title:</span>
-                 {
-                     newDeed.id?<input className="input_form_input" value={auctionTitle} onChange={handleAuctionTitle}/>:<input className="input_form_input" value={newDeed.id} disabled />
-                 }
-            </div>
-            <div className="input_form">
-                 <span className="input_form_label">Starting Price (in wei):</span>
-                 {
-                     newDeed.id?<input className="input_form_input" type="number" value={startingPrice} onChange={handleStartingPrice}/>:<input className="input_form_input" type="number" value={startingPrice} disabled/>
-                 }
-            </div>
-            <div className="input_form">
-                 <span className="input_form_label">End Date (EST):</span>
-                 {
-                     newDeed.id?<input className="input_form_input" type="datetime-local" value={endDate} onChange={handleEndDate}/>:<input className="input_form_input" type="number" value={handleEndDate} disabled/>
-                 }
-            </div>
-            <div className="input_form">
-                 <span className="input_form_label">Auction Summary:</span>
-                 {
-                     newDeed.id?<textarea className="input_form_textarea" value={auctionMetadata} onChange={handleAuctionMetaData}/>:<textarea className="input_form_textarea" value={auctionMetadata} disabled/>
-                 }
-            </div>
-            <div className="input_form">
-            <button className="input_form_button" onClick={createAuction}>start</button>
-            </div>
-                 
+            <hr/>
+            {
+                /*
+                newDeed.id?
+                <div className="input_form_group enabled">
+                        <h3>Create Auction:</h3>
+                        <div className="input_form">
+                            <span className="input_form_label">Deed ID: </span>
+                            <input className="input_form_input" value={newDeed.id}></input>
+                        </div>
+                        <div className="input_form">
+                            <span className="input_form_label">Owner Wallet:</span>
+                            <input className="input_form_input" value={newDeed.by}></input>
+                        </div>
+                </div>:
+                <div className="input_form_group">
+                        <h3>Create Auction:</h3>
+                        <div className="input_form">
+                            <span className="input_form_label">Deed ID: </span>
+                            <input className="input_form_input" value={newDeed.id} disabled></input>
+                        </div>
+                        <div className="input_form">
+                            <span className="input_form_label">Owner Wallet:</span>
+                            <input className="input_form_input" value={newDeed.by} disabled></input>
+                        </div>
+                </div>*/
+            }
             
         </div>
     )
