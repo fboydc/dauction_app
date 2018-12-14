@@ -6,7 +6,11 @@ const Header = (props)=>{
     const [modalClass, setModalClass] = useState("");
     const [open, isOpen] = useState(false);
     const [deedId, setDeedId] = useState("");
-    const [deedUrl, setDeedUrl] = useState("");
+
+    const generateId =  ()=> {
+        return Math.floor(100000000 + Math.random() * 900000000);
+    };
+   
 
 
     useEffect(()=>{
@@ -17,8 +21,9 @@ const Header = (props)=>{
     const toggleModal = ()=>{
         isOpen(!open);
         if(open){
-            setDeedUrl("");
             setDeedId(generateId());
+            /*setDeedUrl("");
+            setDeedId(generateId());*/
             setModalClass("auction_modal_container auction_modal_contianer_show");
         }else{
             setModalClass("auction_modal_container");
@@ -26,14 +31,11 @@ const Header = (props)=>{
         
     }
 
-    const handleDeedDeedUrlInput = (e)=>{
-        setDeedUrl(e.target.value);
-      }
+    
 
-    const generateId =  ()=> {
-       
-          return Math.floor(100000000 + Math.random() * 900000000);
-    };
+    
+
+   
 
     
 
@@ -45,7 +47,7 @@ const Header = (props)=>{
             <button className="new-auction-button" onClick={toggleModal}>
                 <span>New Auction</span>
             </button>
-            <AuctionModal modalClass={modalClass} toggleModal={toggleModal} deedId={deedId} deedUrl={deedUrl} setDeedUrl={setDeedUrl} handleDeedDeedUrlInput={handleDeedDeedUrlInput} wallet={props.wallet} newDeed={props.newDeed}/>
+            <AuctionModal modalClass={modalClass} toggleModal={toggleModal}  wallet={props.wallet} deedId={deedId}/>
         </header>
     )
 }

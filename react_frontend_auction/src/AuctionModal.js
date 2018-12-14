@@ -5,17 +5,40 @@ import DeedRepository from './config/DeedRepository';
 
 const AuctionModal = (props)=>{
 
-    useEffect(()=>{
-        console.log("i've been rendered");
-        return ()=>{
-            console.log("i've been dismissed");
-        }
-    })
+   
+    const [deedUrl, setDeedUrl] = useState("");
+    const [newDeed, setNewdeed] = useState({});
+    const[auctionTitle, setAuctionTitle] = useState('');
+    const[auctionMetadata, setAuctionMetadata] = useState('');
+    const[startingPrice, setStartingPrice] = useState('');
+    const[endDate, setEndDate] = useState('');
 
+
+    
+
+    const handleDeedUrlInput = (e)=>{
+        setDeedUrl(e.target.value);
+    }
+
+    const handleAuctionTitle = (e)=>{
+        setAuctionTitle(e.target.value);
+    }
+
+    const handleAuctionMetaData = (e)=>{
+        setAuctionMetadata(e.target.value);
+    }
+
+    const handleStartingPrice = (e)=>{
+        setStartingPrice(e.target.value);
+    }
+
+    const handleEndDate = (e)=>{
+        setEndDate(e.target.value);
+    }
 
     const createDeed = ()=>{
-        if(validateInput(props.deedUrl)){
-            DeedRepository.methods.registerDeed(props.deedId, props.deedUrl).send({from: props.wallet}, (error, transactionHash)=>{
+        if(validateInput(deedUrl)){
+            DeedRepository.methods.registerDeed(props.deedId, deedUrl).send({from: props.wallet}, (error, transactionHash)=>{
                 if(error)
                     console.log("error", error);
                 else
@@ -29,6 +52,10 @@ const AuctionModal = (props)=>{
             
     }
 
+    const createAuction = ()=>{
+        console.log("to be implemented");
+    }
+
     const validateInput = (input)=>{
         if(input){
             return true;
@@ -37,14 +64,20 @@ const AuctionModal = (props)=>{
         }
     }
   
-      
+    
+    const resetModal = ()=>{
+        setDeedUrl("");
+        
+        props.toggleModal();
+    }
+    
     
 
     return(
         <div className={props.modalClass}>
             <div className="modal_top_row">
                 <h3>Let's create your deed first:</h3>
-                <button className="close-button" onClick={props.toggleModal}>X</button>
+                <button className="close-button" onClick={resetModal}>X</button>
             </div>
             <div className="input_form">
                  <span className="input_form_label">Deed Identifier</span>
@@ -52,7 +85,7 @@ const AuctionModal = (props)=>{
             </div>
             <div className="input_form">
                  <span className="input_form_label">Deed Url</span>
-                 <input className="input_form_input" value={props.deedUrl} onChange={props.handleDeedDeedUrlInput}/>
+                 <input className="input_form_input" value={deedUrl} onChange={handleDeedUrlInput}/>
             </div>
             <div className="input_form"> 
                 <button className="input_form_button" onClick={createDeed}>create</button>
@@ -60,7 +93,7 @@ const AuctionModal = (props)=>{
             <hr/>
             <div className="input_form">
             {
-             props.newDeed?<p>Deed ID: <span>{props.newDeed.id}</span>Owner Wallet:<span>{props.newDeed.by}</span></p>:<span>Create Deed first!</span>   
+             newDeed.id?<p>Deed ID: <span>{newDeed.id}</span>Owner Wallet:<span>{newDeed.by}</span></p>:<span>Create Deed first!</span>   
             }
             </div>  
             <div className="modal_top_row">
@@ -68,12 +101,37 @@ const AuctionModal = (props)=>{
             </div>
             <div className="input_form">
                  <span className="input_form_label">Deed ID:</span>
-                 <input className="input_form_input" value={props.newDeed.id} disabled/>
+                 <input className="input_form_input" value={newDeed.id} disabled/>
             </div>
             <div className="input_form">
                  <span className="input_form_label">Auction Title:</span>
-                 <input className="input_form_input" value={props.newDeed.id} />
+                 {
+                     newDeed.id?<input className="input_form_input" value={auctionTitle} onChange={handleAuctionTitle}/>:<input className="input_form_input" value={newDeed.id} disabled />
+                 }
             </div>
+            <div className="input_form">
+                 <span className="input_form_label">Starting Price (in wei):</span>
+                 {
+                     newDeed.id?<input className="input_form_input" type="number" value={startingPrice} onChange={handleStartingPrice}/>:<input className="input_form_input" type="number" value={startingPrice} disabled/>
+                 }
+            </div>
+            <div className="input_form">
+                 <span className="input_form_label">End Date (EST):</span>
+                 {
+                     newDeed.id?<input className="input_form_input" type="datetime-local" value={endDate} onChange={handleEndDate}/>:<input className="input_form_input" type="number" value={handleEndDate} disabled/>
+                 }
+            </div>
+            <div className="input_form">
+                 <span className="input_form_label">Auction Summary:</span>
+                 {
+                     newDeed.id?<textarea className="input_form_textarea" value={auctionMetadata} onChange={handleAuctionMetaData}/>:<textarea className="input_form_textarea" value={auctionMetadata} disabled/>
+                 }
+            </div>
+            <div className="input_form">
+            <button className="input_form_button" onClick={createAuction}>start</button>
+            </div>
+                 
+            
         </div>
     )
 }
